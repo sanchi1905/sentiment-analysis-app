@@ -1,8 +1,7 @@
 import streamlit as st
 import pickle
-import numpy as np
 
-# Load trained model and vectorizer
+# Load model and vectorizer
 model = pickle.load(open('sentiment_model.pkl', 'rb'))
 vectorizer = pickle.load(open('vectorizer.pkl', 'rb'))
 
@@ -24,7 +23,3 @@ if st.button("Analyze"):
         st.success(f"🎯 Predicted Sentiment: **{readable_sentiment}**")
     else:
         st.warning("⚠️ Please enter a message to analyze!")
-
-readable_sentiment = label_map.get(prediction, "Unknown")
-
-st.success(f"🎯 Predicted Sentiment: **{readable_sentiment}**")
