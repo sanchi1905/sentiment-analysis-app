@@ -1,0 +1,17 @@
+# Ignore large datasets
+training.1600000.processed.noemoticon.csv
+
+# Ignore Python cache
+__pycache__/
+*.pyc
+
+# Ignore virtual environment
+venv/
+
+# Ignore pickle and model files
+*.pkl
+*.h5
+
+# Ignore Jupyter and log files
+*.ipynb
+*.log
