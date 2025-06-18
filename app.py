@@ -1,25 +1,40 @@
 import streamlit as st
-import pickle
+import joblib
+import re
+import nltk
+from nltk.corpus import stopwords
+
+nltk.download('stopwords')
 
 # Load model and vectorizer
-model = pickle.load(open('sentiment_model.pkl', 'rb'))
-vectorizer = pickle.load(open('vectorizer.pkl', 'rb'))
+model = joblib.load('sentiment_model.pkl')
+vectorizer = joblib.load('tfidf_vectorizer.pkl')
 
-st.title("🧠 Sentiment Analysis App")
-st.write("Enter a message below to analyze its sentiment:")
+# Preprocesing function
+def clean_text(text):
+    text = re.sub(r'[^a-zA-Z\s]', '', text)
+    text = text.lower()
+    words = [word for word in text.split() if word not in stopwords.words('english')]
+    return ' '.join(words)
 
-user_input = st.text_area("Message", "")
+#UI layout
+st.set_page_config(page_title="Sentiment Analysis", page_icon=":smiley:", layout="centered")
 
-label_map = {
-    0: "Negative",
-    1: "Neutral"
-}
+st.markdown("<h1 style='text-align:center;'>🧠 Sentiment Analyzer</h1>", unsafe_allow_html=True)
+st.write("Enter a sentence or phrase and get its sentiment:")
+
+# User input
+user_input = st.text_input("Enter your message here:")
 
 if st.button("Analyze"):
-    if user_input.strip():
-        input_vector = vectorizer.transform([user_input])
-        prediction = model.predict(input_vector)[0]
-        readable_sentiment = label_map.get(prediction, "Unknown")
-        st.success(f"🎯 Predicted Sentiment: **{readable_sentiment}**")
+    if user_input.strip() == "":
+        st.warning("Please enter some text!")
     else:
-        st.warning("⚠️ Please enter a message to analyze!")
+        cleaned = clean_text(user_input)
+        vect_text = vectorizer.transform([cleaned])
+        prediction = model.predict(vect_text)[0]
+
+        if prediction == 1:
+            st.success("😊 Positive Sentiment")
+        else:
+            st.error("😞 Negative Sentiment")
