@@ -8,8 +8,9 @@ __pycache__/
 # Ignore virtual environment
 venv/
 
-# Ignore pickle and model files
+# Ignore pickle and model files (except the 3-class production model)
 *.pkl
+!model_pipeline_3class.pkl
 *.h5
 
 # Ignore Jupyter and log files
