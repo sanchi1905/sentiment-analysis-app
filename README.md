@@ -17,8 +17,7 @@ A powerful **three-class sentiment analysis** web application built with Streaml
 
 ## 🚀 Live Demo
 
-Try the app live: **[Sentiment Analysis App](https://your-app-name.streamlit.app)** *(Update after deployment)*
-
+Try the app live: **[Sentiment Analysis App](https://sentiment-analysis-app-sanchi.streamlit.app/)** 
 ## 📊 Model Performance
 
 ```
